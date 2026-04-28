@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Env / secrets
+.env
+*.key
+
+# VS Code local settings
+.vscode/
+
+# Logs
+logs/
+*.log
