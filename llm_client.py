@@ -42,14 +42,10 @@ def chat_completion(
     messages: list[dict[str, str]],
     temperature: float = 0.3,
 ) -> str:
-    """
-    调用 DeepSeek Chat Completion 接口，并返回文本内容。
+    print(f"[DEBUG][llm_client] 准备调用模型：{model}")
+    print(f"[DEBUG][llm_client] messages 数量：{len(messages)}")
+    print(f"[DEBUG][llm_client] temperature：{temperature}")
 
-    说明：
-    - OpenAI SDK 的类型定义要求 messages 是 Iterable[ChatCompletionMessageParam]
-    - 但项目内部为了简单，统一使用 list[dict[str, str]]
-    - 这里用 cast 告诉 Pylance：这些 dict 符合 ChatCompletionMessageParam 结构
-    """
     typed_messages = cast(
         Iterable[ChatCompletionMessageParam],
         messages,
@@ -61,5 +57,9 @@ def chat_completion(
         temperature=temperature,
     )
 
+    print(f"[DEBUG][llm_client] 模型调用完成：{model}")
+
     content = response.choices[0].message.content
+    print(f"[DEBUG][llm_client] 返回内容长度：{len(content or '')}")
+
     return content or ""

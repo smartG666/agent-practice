@@ -1,0 +1,46 @@
+[
+  {
+    "role": "system",
+    "content": "你是一个通过 DeepSeek API 调用的本地实验性 Agent 助手。\n你运行在用户本地 Python 程序中，但模型能力来自远程 DeepSeek API。\n\n要求：\n1. 回答要清晰、直接。\n2. 如果用户在测试上下文记忆，你要基于历史对话回答。\n3. 不要假装知道没有出现在上下文里的信息。\n4. 当用户问你是什么模型时，说明你是通过 DeepSeek API 调用的模型助手，不要声称自己是本地部署模型。"
+  },
+  {
+    "role": "system",
+    "content": "以下是用户的长期记忆，回答时如果相关可以参考；如果不相关，不要强行使用。\n\n1. [preference] 用户不喜欢含糊其辞的回答，偏好明确、不含糊的答案。 (importance: 0.9 | key: prefer_concise_answer | tags: communication, preference)\n2. [learning] 用户计划在学习AI Agent的同时复习Python知识 (importance: 0.7 | key: learning_plan | tags: learning_plan, python, ai_agent)\n3. [learning] 用户计划在2个月内学习AI Agent相关内容 (importance: 0.7 | key: learning_goal_ai_agent | tags: AI Agent, 学习计划)"
+  },
+  {
+    "role": "user",
+    "content": "我不喜欢含糊其辞的回答"
+  },
+  {
+    "role": "assistant",
+    "content": "明白，我会给出明确、不含糊的答案，直接说清观点或事实。有什么问题可以直接问。"
+  },
+  {
+    "role": "user",
+    "content": "我希望过几个月去新加坡完"
+  },
+  {
+    "role": "assistant",
+    "content": "明白，给你一个不含糊的建议：\n\n如果计划几个月后去新加坡玩，时间上 **尽量避开11月至次年1月**，那是东北季风雨季，阵雨频繁、湿度很大。相对理想的时段是 **2月到4月**（干季末尾，比较舒适）或 **6月到9月**（虽然热，但比雨季方便出行）。\n\n出发前注意：  \n- 中国公民需提前办签证（通常通过旅行社或担保人）；  \n- 当地语言以英语为主，但华语也普遍通用；  \n- 货币用新加坡元（SGD），大部分地方可刷卡；  \n- 核心游玩区域：滨海湾、圣淘沙、牛车水、乌节路、动物园/夜间动物园等。\n\n如果你告诉我具体想去的月份、预算或兴趣点（美食？购物？亲子？），我可以直接给出更精准的行程建议。"
+  },
+  {
+    "role": "user",
+    "content": "我计划在2个月内学习AI Agent的相关内容"
+  },
+  {
+    "role": "assistant",
+    "content": "要在2个月内扎实掌握AI Agent相关内容，按以下计划执行会比较高效。不空谈“看情况”，分 3 个阶段走：\n\n---\n\n**阶段一：理论基础（第1-2周）**\n- **必学概念**  \n  Agent、环境、状态、动作、奖励、策略、值函数（如果完全没概念，先看 RL 基础概念）。  \n  推荐：Sutton & Barto《强化学习(第二版)》前4章 + 第6章（TD 学习）。\n- **必搞清楚的问题**  \n  Agent 与普通预测模型的核心区别（自主决策、与环境交互、有目标）。  \n  单 Agent / 多 Agent 系统的典型场景。\n\n---\n\n**阶段二：核心框架与实现（第3-5周）**\n- **主攻框架**：LangChain 或 AutoGPT / BabyAGI 的源码级别理解。  \n  建议选 **LangChain** 作为主线，覆盖面广且社区活跃。  \n  任务：  \n  - 安装 LangChain  \n  - 跑通 `AgentExecutor` + 工具调用（自定义工具、搜索工具、计算工具）  \n  - 理解 `AgentType`（ZERO_SHOT_REACT_DESCRIPTION 等）、`Prompt` 结构、`OutputParser`  \n  - 用 OpenAI API（或国内可用的 LLM API）构建一个能调用多个工具完成任务的 Agent。\n- **必须手写的代码**  \n  一个小型任务规划 Agent：输入复杂任务，拆解为步骤，调用不同工具逐步执行，并检查中间结果。  \n  把 LangChain 的 `create_react_agent` 拆开写一次，理解 `Thought-Action-Observation` 循环。\n\n---\n\n**阶段三：实战与进阶（第6-8周）**\n- **项目1：个人知识库问答 Agent**  \n  结合向量数据库（Chroma / Pinecone）+ 检索工具，做一个能检索本地文档并回答问题的 Agent。\n- **项目2：多步工作流 Agent**  \n  比如“根据用户描述生成旅行计划”：从搜索景点、评估交通、计算预算，到最后输出 PDF 行程单。  \n  要求 Agent 自主判断需调用哪些工具，并有重试/报错机制。\n- **如果学有余力**  \n  - 看 ReAct、Plan-and-Execute 等 Agent 规划范式的论文  \n  - 了解 GPT-4 的函数调用模式（`function calling`）与传统 Agent 的关系  \n  - 涉猎多 Agent 框架（MetaGPT、AutoGen 等）的设计思想，但不要求在 2 个月内精通实现。\n\n---\n\n**直接行动清单**\n1. 每天平均投入 **1.5-2小时**（周末加倍），确保累计约 **120小时**。  \n2. 第2周结束必须写出一个调用 Wolfram Alpha 或搜索引擎工具的基础 Agent。  \n3. 第5周结束时完成 LangChain 工具调用 Agent 的手写复现。  \n4. 最后一周交付上述两个项目，并整理成笔记或 GitHub 链接。\n\n只要严格按这个节奏走，两个月足够从原理到实战，构建出能自主决策的 Agent 系统。需要补充具体资料或代码示例可以直接问。"
+  },
+  {
+    "role": "user",
+    "content": "在学习ai agent的同时我计划复习一下Pythoy的知识"
+  },
+  {
+    "role": "assistant",
+    "content": "你说的“Pythoy”应该是指 **Python**，我直接纠正一下，避免后续混淆。\n\n在2个月学习AI Agent的同时复习Python，需要做到 **不额外拉长时间线，而是把Python复习嵌入到Agent实战中**。以下是明确可行的方案：\n\n---\n\n### 1. 复习侧重：只抓Agent用得到的Python技能\n不要全面复习，重点巩固：\n- **函数、类、装饰器**（Agent工具封装、自定义工具）\n- **异常处理**（Agent容错的关键）\n- **异步编程（async/await）**（LangChain底层大量使用）\n- **类型提示**（代码清晰，便于理解框架源码）\n- **正则表达式、字符串处理**（解析Agent输出）\n- **文件读写、JSON/API处理**（工具交互基础）\n\n### 2. 嵌入方式：学到哪里，补到哪里\n- 第2周写基础Agent时，遇到API调用报错，就趁机复习 `requests`/`httpx` 的错误处理。\n- 第4周拆解LangChain源码，看到 `@tool` 装饰器，立刻回顾装饰器原理。\n- 第5周构建多步骤Agent，涉及步骤缓存或日志，趁机复习 `json`、`pathlib` 等文件操作。\n- 第6周做知识库Agent，用 `async` 调用向量数据库，复习async/await。\n\n**每周额外复习时间控制在30分钟内**，只在出现知识断层时才查阅资料。\n\n### 3. 快速摸底：开卷做一个Python能力自查（第1天）\n用10个小题测一下你的Python应用能力（例如：读写文件、定义带参数装饰器、使用`yield`、解析命令行参数、发送HTTP请求并解析响应）。哪个做不出来就针对性补，不系统重学。\n\n---\n\n**简明行动清单**：\n1. 正式学习AI Agent前花 **2小时** 做Python能力自查，标记薄弱点。\n2. 不另外安排整块Python复习时间，随Agent学习出现需要时即时回顾。\n3. 重点补强上面列出的6个技能，忽略与Agent无关的内容（如GUI、Web框架Django/Flask等）。\n\n这样两个月结束时，你不仅掌握了AI Agent实战能力，Python功底也会因为高频使用而自然巩固。需要自查题目或具体代码示例可以直接说。"
+  },
+  {
+    "role": "user",
+    "content": "我计划同时补习一下基础的数学知识，包括概率论和微积分"
+  }
+]
