@@ -11,7 +11,10 @@ venv/
 # VS Code local settings
 .vscode/
 
+# Data / Sessions
+data/
+sessions/
+
 # Logs
 logs/
 *.log
-sessions/default.json
